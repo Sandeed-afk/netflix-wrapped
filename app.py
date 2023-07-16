@@ -32,17 +32,17 @@ app = Flask(__name__)
 CORS(app, resources={r"/upload": {"origins": "*"}, r"/upload": {"methods": ["POST"]}})
 app.register_blueprint(views, url_prefix="/views")
 
-@app.route('/upload', methods=['POST', 'GET'])
+@app.route('/upload')
 def upload():
-    if request.method == 'POST':
-        try:
-            file_data = request.get_data()
-            decoded_data = file_data.decode('utf-8')
+    try:
+        file_data = request.get_data()
+        decoded_data = file_data.decode('utf-8')
         # Process the file data
-            return process_file(decoded_data)
-        except Exception as e:
-            error_message = str(e)
-            return jsonify({'error': error_message}), 500
+        return process_file(decoded_data)
+    except Exception as e:
+        error_message = str(e)
+        return jsonify({'error': error_message}), 500
+
     
 def process_file(file_data):
     try:
