@@ -1,0 +1,130 @@
+
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue">
+<head>
+    <title>Your stats</title>
+    <style>
+        body {
+            background-color: #131313;
+            color: #be0000;
+            font-family: 'Bebas Neue';
+            margin: 0;
+            padding: 0;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            flex-wrap: wrap;
+        }
+
+        #header {
+            background-color: #131313;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Bebas Neue';
+            font-size: 20px;
+            width: 100%;
+        }
+        h1 {
+            font-size: 70px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #be0000;
+            width: 100%;
+        }
+        a {
+            color: rgb(116, 193, 255);
+            font-size: 23px;
+        }
+        p {
+            font-size: 35px;
+        }
+        ul {
+            color:white;
+        }
+        #actorsList {
+            flex: 1;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 25px;
+        }
+        #genresList {
+            flex: 1;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 25px;
+        }
+        #seriesList {
+            flex: 1;
+            margin-top: 20px;
+            margin-bottom: 20px;
+            font-size: 25px;
+        }
+        h2, h3, h4 {
+            font-size: 35px;
+        }
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>Results</h1>
+        <p>Created by: Sandeed Sikandar</p>
+        <a href="//www.linkedin.com/in/sandeed-sikandar/" target="_blank">Linkedin</a>
+        <a href="mailto:ssikandar6@gatech.edu" target="_blank">ssikandar6@gatech.edu</a>
+    </div>
+    <h2>Most Seen Actors:</h2>
+    <ul id="actorsList"></ul>
+
+    <h4>Top 10 Series:</h4>
+    <ul id="seriesList"></ul>
+
+    <h3>Top Genres:</h3>
+    <ul id="genresList"></ul>
+
+    
+
+    <script>
+        url = window.location.href;
+        const decodedUrl = decodeURIComponent(url);
+        const startIndex = decodedUrl.indexOf('[');
+        const endIndex = decodedUrl.lastIndexOf(']');
+
+        const dataString = decodedUrl.substring(startIndex, endIndex + 1);
+        const data = JSON.parse(dataString);
+
+        // Access the arrays
+        const actors = data[0];
+        const genres = data[1];
+        const series = data[2];
+        const date = data[3];
+
+        // Function to create a list item element with the given text
+        function createListItem(text) {
+            const li = document.createElement('li');
+            li.textContent = text;
+            return li;
+        }
+
+        // Populate the actors list
+        const actorsList = document.getElementById('actorsList');
+        actors.forEach(actor => {
+            const listItem = createListItem(actor);
+            actorsList.appendChild(listItem);
+        });
+
+        // Populate the genres list
+        const genresList = document.getElementById('genresList');
+        genres.forEach(genre => {
+            const listItem = createListItem(genre);
+            genresList.appendChild(listItem);
+        });
+
+        // Populate the series list
+        const seriesList = document.getElementById('seriesList');
+        series.forEach(serie => {
+            const listItem = createListItem(serie);
+            seriesList.appendChild(listItem);
+        });
+    </script>
+</body>
+</html>

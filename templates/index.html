@@ -1,0 +1,346 @@
+<!DOCTYPE html>
+<html>
+    <link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Bebas+Neue">
+<head>
+    <title>NetflixWrapped</title>
+    <style>
+        body {
+            background-color: #131313;
+            color: #be0000;
+            font-family: 'Bebas Neue';
+            margin: 0;
+            padding: 0;
+        }
+
+        #header {
+            background-color: #131313;
+            padding: 10px;
+            text-align: center;
+            font-family: 'Bebas Neue';
+            font-size: 20px;
+        }
+
+        #content {
+            max-width: 600px;
+            margin: 20px auto;
+            padding: 20px;
+            text-align: center;
+            font-size: 30px;
+            background-color: #111111;
+            border-radius: 10px;
+            box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
+        }
+        p {
+            font-size: 35px;
+        }
+        h1 {
+            font-size: 70px;
+            margin-top: 0;
+            margin-bottom: 10px;
+            color: #be0000;
+        }
+
+        #drop-area {
+            width: 400px;
+            height: 300px;
+            border: 2px dashed #be0000;
+            border-radius: 10px;
+            padding: 20px;
+            text-align: left;
+            font-size: 30px;
+            margin: 0 auto;
+            background-color: #131313;
+            color: #e4e4e4;
+        }
+
+        #drop-area p {
+            margin-top: 20px;
+            font-size: 45px;
+            font-size: x-large;
+        }
+        a {
+            color: rgb(116, 193, 255);
+            font-size: 23px;
+        }
+        #drop-area.highlight {
+            border-color: #ffffff;
+            background-color: #444444;
+        }
+
+        #drop-area.dragover {
+            background-color: #444444;
+        }
+        *.hidden {
+  display: none !important;
+}
+
+div.loading{
+  position: fixed;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 100%;
+  background-color: rgba(16, 16, 16, 0.5);
+}
+
+@-webkit-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-ms-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-moz-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-webkit-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@-o-keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+@keyframes uil-ring-anim {
+  0% {
+    -ms-transform: rotate(0deg);
+    -moz-transform: rotate(0deg);
+    -webkit-transform: rotate(0deg);
+    -o-transform: rotate(0deg);
+    transform: rotate(0deg);
+  }
+  100% {
+    -ms-transform: rotate(360deg);
+    -moz-transform: rotate(360deg);
+    -webkit-transform: rotate(360deg);
+    -o-transform: rotate(360deg);
+    transform: rotate(360deg);
+  }
+}
+.uil-ring-css {
+  margin: auto;
+  position: absolute;
+  top: 0;
+  left: 0;
+  bottom: 0;
+  right: 0;
+  width: 200px;
+  height: 200px;
+  color:#be0000;
+}
+.uil-ring-css > div {
+  position: absolute;
+  display: block;
+  width: 160px;
+  height: 160px;
+  top: 20px;
+  left: 20px;
+  border-radius: 80px;
+  box-shadow: 0 6px 0 0 #be0000;
+  -ms-animation: uil-ring-anim 1s linear infinite;
+  -moz-animation: uil-ring-anim 1s linear infinite;
+  -webkit-animation: uil-ring-anim 1s linear infinite;
+  -o-animation: uil-ring-anim 1s linear infinite;
+  animation: uil-ring-anim 1s linear infinite;
+}
+    </style>
+</head>
+<body>
+    <div id="header">
+        <h1>Netflix-Wrapped</h1>
+        <p>Created by: Sandeed Sikandar</p>
+        <a href="//www.linkedin.com/in/sandeed-sikandar/" target="_blank">Linkedin</a>
+        <a href="mailto:ssikandar6@gatech.edu" target="_blank">ssikandar6@gatech.edu</a>
+    </div>
+
+    <div id="content">
+        <div id="instructions">
+            <p>Welcome! To get started, follow the instructions below to get your Netflix Wrapped</p>
+        </div>
+        <div id="drop-area">
+            <p style="margin-top: 0;">1. From Netflix, go to "Account". (Top right)<br><br>2.Scroll to Profile & Parental Controls settings.<br><br>3.Open Viewing activity.<br><br>4.Select "Download all" at the bottom of the page.<br><br>5.Drag and Drop the file into this box!</p>
+        </div>
+    </div>
+    <div class="loading">
+        <div class='uil-ring-css' style='transform:scale(0.79);'>
+          <div></div>
+        </div>
+      </div>
+
+    <script>
+        var dropArea = document.getElementById('drop-area');
+        var loadingOverlay = document.querySelector('.loading');
+        loadingOverlay.classList.add('hidden');
+        // Prevent default drag behaviors
+        ['dragenter', 'dragover', 'dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, preventDefaults, false);
+            document.body.addEventListener(eventName, preventDefaults, false);
+        });
+
+        // Highlight drop area when item is dragged over it
+        ['dragenter', 'dragover'].forEach(eventName => {
+            dropArea.addEventListener(eventName, highlight, false);
+        });
+
+        ['dragleave', 'drop'].forEach(eventName => {
+            dropArea.addEventListener(eventName, unhighlight, false);
+        });
+
+        // Handle dropped files
+        dropArea.addEventListener('drop', handleDrop, false);
+
+        function preventDefaults(e) {
+            e.preventDefault();
+            e.stopPropagation();
+        }
+
+        function highlight(e) {
+            dropArea.classList.add('highlight');
+        }
+
+        function unhighlight(e) {
+            dropArea.classList.remove('highlight');
+        }
+
+        function handleDrop(e) {
+            var dt = e.dataTransfer;
+            var files = dt.files;
+
+            handleFiles(files);
+        }
+
+        function handleFiles(files) {
+            files = [...files];
+            files.forEach(uploadFile);
+        }
+
+        function uploadFile(file) {
+            if (file.type === 'text/csv') {
+                var reader = new FileReader();
+                loadingOverlay.classList.remove('hidden');
+                reader.onloadend = function() {
+            var fileData = reader.result;
+
+            // Send file data to the server using an HTTP request
+            var xhr = new XMLHttpRequest();
+            xhr.open('POST', 'http://127.0.0.1:8000/upload', true);
+            xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+
+            xhr.onreadystatechange = function() {
+                var responseData = xhr.responseText;
+                console.log(responseData); // Log the returned data\        loadingOverlay.classList.add('hidden');
+                loadingOverlay.classList.add('hidden');
+                window.location.href = '/views/new_screen/' + encodeURIComponent(responseData);
+            };
+
+            xhr.send(fileData);
+            var responseData = JSON.parse(xhr.responseText);
+            console.log(responseData); // Log the returned data
+
+            
+            var xhr2 = new XMLHttpRequest();
+            xhr2.open('POST', 'http://127.0.0.1:8000/handle_event', true);
+        };
+
+        reader.readAsArrayBuffer(file);
+            } else {
+                alert('Please select a CSV file.');
+            }
+            }
+    </script>
+</body>
+</html>
