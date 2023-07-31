@@ -317,23 +317,34 @@ div.loading{
 
             // Send file data to the server using an HTTP request
             var xhr = new XMLHttpRequest();
-            xhr.open('POST', 'http://127.0.0.1:8000/upload', true);
-            xhr.setRequestHeader('Content-Type', 'application/octet-stream');
+            xhr.open('POST', '/upload', true); // Use relative URL for upload endpoint
+xhr.setRequestHeader('Content-Type', 'application/octet-stream');
 
-            xhr.onreadystatechange = function() {
-                var responseData = xhr.responseText;
-                console.log(responseData); // Log the returned data\        loadingOverlay.classList.add('hidden');
-                loadingOverlay.classList.add('hidden');
-                window.location.href = '/views/new_screen/' + encodeURIComponent(responseData);
-            };
+xhr.onreadystatechange = function() {
+    if (xhr.readyState === 4 && xhr.status === 200) {
+        var responseData = xhr.responseText;
+        console.log(responseData); // Log the returned data
+        loadingOverlay.classList.add('hidden');
+        window.location.href = '/views/new_screen/' + encodeURIComponent(responseData);
+    }
+};
 
-            xhr.send(fileData);
-            // var responseData = JSON.parse(xhr.responseText);
-            // console.log(responseData); // Log the returned data
+xhr.send(fileData);
 
-            
-            var xhr2 = new XMLHttpRequest();
-            xhr2.open('POST', 'http://127.0.0.1:8000/handle_event', true);
+// For the second request:
+var xhr2 = new XMLHttpRequest();
+xhr2.open('POST', '/handle_event', true); // Use relative URL for handle_event endpoint
+// Add any necessary headers for xhr2
+xhr2.onreadystatechange = function() {
+    if (xhr2.readyState === 4 && xhr2.status === 200) {
+        var responseData = xhr2.responseText;
+        console.log(responseData); // Log the returned data
+        // Handle the response as needed
+    }
+};
+// Send any data if required for xhr2
+xhr2.send();
+
         };
 
         reader.readAsArrayBuffer(file);
