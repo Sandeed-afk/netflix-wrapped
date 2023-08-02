@@ -5,7 +5,7 @@ import imdb
 import pandas as pd
 
 views = Blueprint(__name__, "views")
-
+file_data = ""
 @views.route("/")
 def home():
     return render_template("index.html")
@@ -31,6 +31,35 @@ ia = imdb.Cinemagoer()
 app = Flask(__name__)
 CORS(app, resources={r"/upload": {"origins": "*"}, r"/upload": {"methods": ["POST"]}})
 app.register_blueprint(views, url_prefix="/views")
+
+@app.route('/upload-chunk', methods=['POST'])
+def upload_chunk():
+    if request.method == 'POST':
+        try:
+            chunk_data = request.get_data()
+            file_data = file_data + chunk_data
+            # Process the chunk data
+            return jsonify({'message': 'Chunk received successfully'}), 200
+        except Exception as e:
+            error_message = str(e)
+            return jsonify({'error': error_message}), 500
+    else:
+        return jsonify({'error': 'Invalid request method'}), 400
+ 
+@app.route('/upload-combined', methods=['POST'])
+def upload_combined():
+    if request.method == 'POST':
+        try:
+            combined_data = request.get_data()
+            decoded_data = combined_data.decode('utf-8')
+            # Process the combined data and call the existing upload function
+            response_data = process_file(decoded_data)
+            return jsonify(response_data), 200
+        except Exception as e:
+            error_message = str(e)
+            return jsonify({'error': error_message}), 500
+    else:
+        return jsonify({'error': 'Invalid request method'}), 400
 
 @app.route('/upload', methods=['POST'])
 def upload():
@@ -62,7 +91,6 @@ def process_file(file_data):
         max = 0
         maxDate = ""
         for value in sec_column:
-            print(value)
             if value in freq:
                 freq[value] = freq[value] + 1
                 if freq[value] > max:
