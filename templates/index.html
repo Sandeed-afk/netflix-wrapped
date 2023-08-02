@@ -308,47 +308,46 @@ div.loading{
             files.forEach(uploadFile);
         }
 
-        function uploadFile(file) {
+        async function uploadFile(file) {
     if (file.type === 'text/csv') {
         var chunkSize = 20 * 1024 * 1024; // 20MB chunk size
         var reader = new FileReader();
         loadingOverlay.classList.remove('hidden');
-        
-        reader.onloadend = function() {
+
+        reader.onloadend = async function () {
             var fileData = new Uint8Array(reader.result);
             var chunks = [];
-            
+
             for (var i = 0; i < fileData.length; i += chunkSize) {
                 chunks.push(fileData.slice(i, i + chunkSize));
             }
-            
-            uploadChunks(chunks)
-                .then(responseData => {
-                    console.log(responseData); // Log the returned data
-                    loadingOverlay.classList.add('hidden');
-                    window.location.href = '/views/new_screen/' + encodeURIComponent(responseData);
-                })
-                .catch(error => {
-                    console.error(error);
-                    loadingOverlay.classList.add('hidden');
-                });
+
+            try {
+                const responseData = await uploadChunks(chunks);
+                console.log(responseData); // Log the returned data
+                loadingOverlay.classList.add('hidden');
+                window.location.href = '/views/new_screen/' + encodeURIComponent(responseData);
+            } catch (error) {
+                console.error(error);
+                loadingOverlay.classList.add('hidden');
+            }
         };
-        
+
         reader.readAsArrayBuffer(file);
     } else {
         alert('Please select a CSV file.');
     }
 }
 
-function uploadChunks(chunks) {
+async function uploadChunks(chunks) {
+    const combinedChunk = new Uint8Array(chunks.reduce((acc, chunk) => [...acc, ...chunk], []));
+
     return new Promise((resolve, reject) => {
-        var combinedChunk = new Uint8Array(chunks.reduce((acc, chunk) => [...acc, ...chunk], []));
-        
         var xhr = new XMLHttpRequest();
         xhr.open('POST', '/upload-combined', true); // Use relative URL for upload-combined endpoint
         xhr.setRequestHeader('Content-Type', 'application/octet-stream');
-        
-        xhr.onreadystatechange = function() {
+
+        xhr.onreadystatechange = function () {
             if (xhr.readyState === 4) {
                 if (xhr.status === 200) {
                     resolve(xhr.responseText);
@@ -357,10 +356,11 @@ function uploadChunks(chunks) {
                 }
             }
         };
-        
+
         xhr.send(combinedChunk);
     });
 }
+
 
 
     </script>
